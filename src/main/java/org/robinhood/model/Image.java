@@ -1,9 +1,6 @@
 package org.robinhood.model;
 
-import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.nio.file.Path;
 
 /**
  * Author : Pavel Ravvich.
@@ -19,10 +16,6 @@ public class Image {
 
     public boolean fragmentIsExist(final BufferedImage target) {
         return false;
-    }
-
-    public void loadDataImg(Path path) {
-
     }
 
 }
