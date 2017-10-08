@@ -1,5 +1,6 @@
 package org.robinhood.model;
 
+import java.awt.*;
 import java.awt.image.BufferedImage;
 
 /**
@@ -14,8 +15,11 @@ public class Image {
      */
     private BufferedImage image;
 
-    public boolean fragmentIsExist(final BufferedImage target) {
-        return false;
+    public Location contains(final BufferedImage target) {
+
+        final Point point = new Point();
+
+        return new Location();
     }
 
 }
