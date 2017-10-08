@@ -2,7 +2,6 @@ package org.robinhood.parser;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
@@ -23,7 +22,7 @@ public class PageLoader {
 
 
         // Открываем гугл, используя драйвер
-        driver.get("http://webisida.com/Account/LogOn?ReturnUrl=%2fAccount");
+        //driver.get("http://webisida.com/Account/LogOn?ReturnUrl=%2fAccount");
         // По-другому это можно сделать так:
         driver.navigate().to("http://webisida.com/Account/LogOn?ReturnUrl=%2fAccount");
         //System.out.println(driver.getPageSource());
@@ -38,26 +37,9 @@ public class PageLoader {
         try {
             driver.findElement(By.xpath("//input[@value='Войти в аккаунт']")).click();
             System.out.println(driver.getPageSource());
-        } catch (WebDriverException e) {
-            //
         } finally {
             driver.quit();
         }
-
-        System.out.println("TEXT"+password.getAttribute("data-valmsg-summary"));
-//
-//        // Вводим текст
-//        element.sendKeys("Selenium");
-//
-//        // Отправляем форму, при этом дравер сам определит как отправить форму по элементу
-//        element.submit();
-//
-
-
-        // Закрываем браузер
-        driver.quit();
     }
-
-
 }
 
