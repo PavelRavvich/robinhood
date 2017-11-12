@@ -1,5 +1,6 @@
 package org.robinhood.parser.login;
 
+import com.sun.istack.internal.NotNull;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.openqa.selenium.By;
@@ -16,14 +17,11 @@ import org.openqa.selenium.WebDriver;
 public class WebisidaAutoLogin extends AutoLogIn {
 
     public WebisidaAutoLogin(final WebDriver driver) {
-
         super(driver);
-
         driver.navigate().to(WebisidaConst.URL_LOGIN_PAGE.getVal());
     }
 
-    public void enter(final String username,
-                      final String password) {
+    public void enter(@NotNull final String username, @NotNull final String password) {
 
         driver.findElement(By.id(WebisidaConst.ID_SELECTOR_USERNAME.getVal()))
                 .sendKeys(username);

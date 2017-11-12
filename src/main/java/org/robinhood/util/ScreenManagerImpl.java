@@ -1,5 +1,6 @@
 package org.robinhood.util;
 
+import com.sun.istack.internal.NotNull;
 import lombok.Data;
 
 import javax.imageio.ImageIO;
@@ -9,10 +10,10 @@ import java.io.File;
 import java.io.IOException;
 
 /**
- * ScreenSaver do print screen.
+ * ScreenManagerImpl do print screen.
  */
 @Data
-public class ScreenSaver {
+public class ScreenManagerImpl implements ScreenManager {
     /**
      * Template of filename.
      */
@@ -30,7 +31,7 @@ public class ScreenSaver {
      */
     private int maxAmountFiles;
 
-    public ScreenSaver(String baseDir, int maxAmountFiles) {
+    public ScreenManagerImpl(@NotNull final String baseDir, @NotNull final int maxAmountFiles) {
         this.maxAmountFiles = maxAmountFiles;
         this.baseDir = baseDir;
     }
@@ -58,13 +59,11 @@ public class ScreenSaver {
      * Delete all old screens files.
      */
     private void deleteOldScreens() {
-
         final File baseDirectory = new File(baseDir);
-
         final File[] garbageImg = baseDirectory.listFiles();
 
         if (!baseDirectory.isDirectory() || garbageImg == null) {
-            throw new IllegalArgumentException();
+            throw new IllegalStateException("Directory does not exist!");
         }
 
         if (garbageImg.length == 0) return;
@@ -77,18 +76,14 @@ public class ScreenSaver {
     }
 
     /**
-     * Print Screen.
+     * Print ScreenManager.
      *
      * @return byte representation of screen image.
      */
-    private BufferedImage grabScreen() throws AWTException {
-
+    public BufferedImage grabScreen() throws AWTException {
         final Robot robot = new Robot();
-
         final Dimension screenSze = Toolkit.getDefaultToolkit().getScreenSize();
-
         final Rectangle rectangle = new Rectangle(screenSze);
-
         return robot.createScreenCapture(rectangle);
     }
 }
