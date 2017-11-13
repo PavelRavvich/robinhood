@@ -28,12 +28,12 @@ public class ImagesHandlerImpl implements ImagesHandler {
     /**
      * Path to target dir.
      */
-    @Value("${max_amount_screenshot}")
+    @Value("${my.string.screenshot_directory}")
     private String baseDir;
     /**
      * Maximum files for save in base dir.
      */
-    @Value("${max_amount_screenshot}")
+    @Value("${my.int.max_amount_screenshot}")
     private Integer maxAmountFiles;
 
     /**
