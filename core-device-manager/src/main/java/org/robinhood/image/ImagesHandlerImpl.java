@@ -2,7 +2,6 @@ package org.robinhood.image;
 
 import com.sun.istack.internal.NotNull;
 import lombok.Data;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -37,19 +36,12 @@ public class ImagesHandlerImpl implements ImagesHandler {
     @Value("${max_amount_screenshot}")
     private Integer maxAmountFiles;
 
-    private final Robot robot;
-
-    @Autowired
-    public ImagesHandlerImpl(@NotNull final Robot robot) {
-        this.robot = robot;
-    }
-
     /**
      * Do print screen.
      */
     public boolean doScreen() throws IOException, AWTException {
         final Rectangle rectangle = new Rectangle(Toolkit.getDefaultToolkit().getScreenSize());
-        final BufferedImage buffImage = robot.createScreenCapture(rectangle);
+        final BufferedImage buffImage = RobotSingleton.getInstance().createScreenCapture(rectangle);
         if (fileNumber >= maxAmountFiles) {
             deleteOldScreens();
         }
