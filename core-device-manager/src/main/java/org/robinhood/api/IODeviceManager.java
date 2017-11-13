@@ -1,4 +1,4 @@
-package org.robinhood.service;
+package org.robinhood.api;
 
 import lombok.Data;
 

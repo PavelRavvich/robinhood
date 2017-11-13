@@ -2,6 +2,9 @@ package org.robinhood.image;
 
 import com.sun.istack.internal.NotNull;
 import lombok.Data;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -13,6 +16,7 @@ import java.io.IOException;
  * ImagesHandlerImpl handle img tasks.
  */
 @Data
+@Component
 public class ImagesHandlerImpl implements ImagesHandler {
     /**
      * Template of filename.
@@ -25,18 +29,19 @@ public class ImagesHandlerImpl implements ImagesHandler {
     /**
      * Path to target dir.
      */
+    @Value("${max_amount_screenshot}")
     private String baseDir;
     /**
      * Maximum files for save in base dir.
      */
-    private int maxAmountFiles;
+    @Value("${max_amount_screenshot}")
+    private Integer maxAmountFiles;
 
     private final Robot robot;
 
-    public ImagesHandlerImpl(@NotNull final String baseDir, @NotNull final int maxAmountFiles) throws AWTException {
-        this.maxAmountFiles = maxAmountFiles;
-        this.baseDir = baseDir;
-        this.robot = new Robot();
+    @Autowired
+    public ImagesHandlerImpl(@NotNull final Robot robot) {
+        this.robot = robot;
     }
 
     /**
