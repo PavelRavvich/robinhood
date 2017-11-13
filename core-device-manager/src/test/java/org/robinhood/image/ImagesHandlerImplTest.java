@@ -1,4 +1,4 @@
-package org.robinhood.util;
+package org.robinhood.image;
 
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
@@ -14,11 +14,14 @@ import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 
-public class ScreenManagerImplTest {
+public class ImagesHandlerImplTest {
 
-    private final ScreenManager screenManagerManager = new ScreenManagerImpl(dir.getAbsolutePath(), 3);
+    private final ImagesHandler imagesHandler = new ImagesHandlerImpl(dir.getAbsolutePath(), 3);
 
     private static File dir;
+
+    public ImagesHandlerImplTest() throws AWTException {
+    }
 
     @BeforeClass
     public static void beforeClass() throws IOException {
@@ -36,22 +39,22 @@ public class ScreenManagerImplTest {
 
     @Test
     public void whenDoScreenThenCreatePrintScreen() throws IOException, AWTException {
-        screenManagerManager.doScreen();
+        imagesHandler.doScreen();
         final boolean result = dir.listFiles()[0].exists();
         assertTrue(result);
     }
 
     @Test
     public void whenDoScreenThenFilenameLikeTemplate() throws IOException, AWTException {
-        screenManagerManager.doScreen();
+        imagesHandler.doScreen();
         final String name = dir.listFiles()[0].getName();
         assertThat("SCREEN_0", is(name));
     }
 
     @Test
     public void whenDoScreenThenFilenameIncrement() throws IOException, AWTException {
-        screenManagerManager.doScreen();
-        screenManagerManager.doScreen();
+        imagesHandler.doScreen();
+        imagesHandler.doScreen();
         final String name = dir.listFiles()[1].getName();
         assertThat("SCREEN_1", is(name));
     }
@@ -60,7 +63,7 @@ public class ScreenManagerImplTest {
     public void whenAmountScreensOfMaxThenAllFilesDelete() throws IOException, AWTException {
 
         for (int i = 0; i < 4; i++) {
-            screenManagerManager.doScreen();
+            imagesHandler.doScreen();
         }
 
         int amountOfFiles = dir.listFiles().length;
@@ -70,20 +73,20 @@ public class ScreenManagerImplTest {
     /**
      * Test images for matching.
      */
-    private final File screenshot = new File("/Users/pavel/GitHub/robinhood/src/test/java/org/robinhood/util/image/screenshot.png");
-    private final File subImage = new File("/Users/pavel/GitHub/robinhood/src/test/java/org/robinhood/util/image/image.png");
-    private final File notContainSubImg = new File("/Users/pavel/GitHub/robinhood/src/test/java/org/robinhood/util/image/not_contain_ing.png");
+    private final File screenshot = new File("/Users/pavel/GitHub/robinhood/core-device-manager/src/test/java/org/robinhood/image/test_image/screenshot.png");
+    private final File subImage = new File("/Users/pavel/GitHub/robinhood/core-device-manager/src/test/java/org/robinhood/image/test_image/image.png");
+    private final File notContainSubImg = new File("/Users/pavel/GitHub/robinhood/core-device-manager/src/test/java/org/robinhood/image/test_image/not_contain_ing.png");
 
     @Test
     public void whenSubImageContainsInScreenshotThenReturnPointNotEmpty() throws IOException {
-        final Point result = screenManagerManager.findImgFragment(subImage, screenshot);
+        final Point result = imagesHandler.findSubImg(subImage, screenshot);
         assertTrue(result.getX() != -1D);
         assertTrue(result.getY() != -1D);
     }
 
     @Test
     public void whenSubImageNotContainsInScreenshotThenReturnEmptyPoint() throws IOException {
-        final Point result = screenManagerManager.findImgFragment(notContainSubImg, screenshot);
+        final Point result = imagesHandler.findSubImg(notContainSubImg, screenshot);
         assertThat(result.getX(), is(-1D));
         assertThat(result.getY(), is(-1D));
     }
