@@ -3,6 +3,12 @@ package org.robinhood.image;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.robinhood.App;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import java.awt.*;
 import java.io.File;
@@ -14,14 +20,15 @@ import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 
+@RunWith(SpringRunner.class)
+@SpringBootTest(classes = ImagesHandlerImpl.class)
+@ContextConfiguration(classes = App.class)
 public class ImagesHandlerImplTest {
 
-    private final ImagesHandler imagesHandler = new ImagesHandlerImpl(dir.getAbsolutePath(), 3);
+    @Autowired
+    private ImagesHandler imagesHandler;
 
     private static File dir;
-
-    public ImagesHandlerImplTest() throws AWTException {
-    }
 
     @BeforeClass
     public static void beforeClass() throws IOException {

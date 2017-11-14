@@ -1,7 +1,6 @@
 package org.robinhood.image;
 
 import com.sun.istack.internal.NotNull;
-import lombok.Data;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -14,7 +13,6 @@ import java.io.IOException;
 /**
  * ImagesHandlerImpl handle img tasks.
  */
-@Data
 @Component
 public class ImagesHandlerImpl implements ImagesHandler {
     /**
