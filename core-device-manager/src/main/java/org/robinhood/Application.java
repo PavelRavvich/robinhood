@@ -8,9 +8,10 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
  * Created : 13/11/2017.
  */
 @SpringBootApplication
-public class App {
+public class Application {
     public static void main(String[] args) {
-        SpringApplicationBuilder builder = new SpringApplicationBuilder(App.class);
-        builder.headless(false).run(args);
+        SpringApplicationBuilder builder = new SpringApplicationBuilder(Application.class);
+        builder.headless(false);
+        builder.run(args);
     }
 }

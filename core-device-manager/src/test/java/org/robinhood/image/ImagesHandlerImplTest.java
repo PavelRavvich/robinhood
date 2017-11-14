@@ -4,7 +4,7 @@ import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.robinhood.App;
+import org.robinhood.Application;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ContextConfiguration;
@@ -22,7 +22,7 @@ import static org.junit.Assert.assertTrue;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = ImagesHandlerImpl.class)
-@ContextConfiguration(classes = App.class)
+@ContextConfiguration(classes = Application.class)
 public class ImagesHandlerImplTest {
 
     @Autowired
