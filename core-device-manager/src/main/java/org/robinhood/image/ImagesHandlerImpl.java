@@ -8,6 +8,8 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 /**
  * ImagesHandlerImpl handle img tasks.
@@ -104,6 +106,26 @@ public class ImagesHandlerImpl implements ImagesHandler {
                 return new Point(i + dst.getWidth() / 2, j + dst.getHeight() / 2);
             }
         }
-        return new Point(-1, -1);
+        return new Point();
+    }
+
+    /**
+     * Same findSubImg but using Stream API.
+     */
+    public Point findSubImgStream(@NotNull final File subImage, @NotNull final File screenshot) throws IOException {
+        final BufferedImage src = ImageIO.read(screenshot);
+        final BufferedImage dst = ImageIO.read(subImage);
+        final Stream<Point> offsets = generateRange(src.getWidth() - dst.getWidth() + 1, src.getHeight() - dst.getHeight() + 1);
+        final Point point = offsets.filter(o -> findImgFragmentOnOffset(o, src, dst)).findFirst().orElse(new Point());
+        return point.getX() != 0 ? new Point(((int) point.getX() + dst.getWidth() / 2),((int) point.getY() + dst.getWidth() / 2)) : point;
+    }
+
+    private Stream<Point> generateRange(@NotNull final int width, @NotNull final int height) {
+        return IntStream.range(0, width).boxed().flatMap(x -> IntStream.range(0, height).mapToObj(y -> new Point(x, y)));
+    }
+
+    private boolean findImgFragmentOnOffset(final Point offset, final BufferedImage src, final BufferedImage dst) {
+        return generateRange(dst.getWidth(), dst.getHeight()).allMatch(p ->
+                dst.getRGB((int)p.getX(), (int) p.getY()) == src.getRGB((int)(offset.getX() + p.getX()), (int)(offset.getY() + p.getY())));
     }
 }
