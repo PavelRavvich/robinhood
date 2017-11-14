@@ -61,7 +61,6 @@ public class ImagesHandlerImplTest {
 
     @Test
     public void whenAmountScreensOfMaxThenAllFilesDelete() throws IOException, AWTException {
-
         for (int i = 0; i < 4; i++) {
             imagesHandler.doScreen();
         }
@@ -73,9 +72,9 @@ public class ImagesHandlerImplTest {
     /**
      * Test images for matching.
      */
-    private final File screenshot = new File("/Users/pavel/GitHub/robinhood/core-device-manager/src/test/java/org/robinhood/image/test_image/screenshot.png");
-    private final File subImage = new File("/Users/pavel/GitHub/robinhood/core-device-manager/src/test/java/org/robinhood/image/test_image/image.png");
-    private final File notContainSubImg = new File("/Users/pavel/GitHub/robinhood/core-device-manager/src/test/java/org/robinhood/image/test_image/not_contain_ing.png");
+    private final File screenshot = new File("src/test/resources/screenshot.png");
+    private final File subImage = new File("src/test/resources/image.png");
+    private final File notContainSubImg = new File("src/test/resources/not_contain_img.png");
 
     @Test
     public void whenSubImageContainsInScreenshotThenReturnPointNotEmpty() throws IOException {
