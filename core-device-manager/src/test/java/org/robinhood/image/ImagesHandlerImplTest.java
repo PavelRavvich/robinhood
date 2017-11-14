@@ -80,14 +80,28 @@ public class ImagesHandlerImplTest {
     @Test
     public void whenSubImageContainsInScreenshotThenReturnPointNotEmpty() throws IOException {
         final Point result = imagesHandler.findSubImg(subImage, screenshot);
-        assertTrue(result.getX() != -1D);
-        assertTrue(result.getY() != -1D);
+        assertTrue(result.getX() != 0D);
+        assertTrue(result.getY() != 0D);
     }
 
     @Test
     public void whenSubImageNotContainsInScreenshotThenReturnEmptyPoint() throws IOException {
         final Point result = imagesHandler.findSubImg(notContainSubImg, screenshot);
-        assertThat(result.getX(), is(-1D));
-        assertThat(result.getY(), is(-1D));
+        assertThat(result.getX(), is(0D));
+        assertThat(result.getY(), is(0D));
+    }
+
+    @Test
+    public void whenSubImageContainsInScreenshotStreamThenReturnPointNotEmpty() throws IOException {
+        final Point result = imagesHandler.findSubImgStream(subImage, screenshot);
+        assertTrue(result.getX() != 0D);
+        assertTrue(result.getY() != 0D);
+    }
+
+    @Test
+    public void whenSubImageNotContainsInScreenshotStreamThenReturnEmptyPoint() throws IOException {
+        final Point result = imagesHandler.findSubImgStream(notContainSubImg, screenshot);
+        assertThat(result.getX(), is(0D));
+        assertThat(result.getY(), is(0D));
     }
 }

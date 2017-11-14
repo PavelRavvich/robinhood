@@ -21,4 +21,5 @@ public interface ImagesHandler {
      * @return center of target img.
      */
     Point findSubImg(@NotNull final File subImage, @NotNull final File screenshot) throws IOException;
+    Point findSubImgStream(@NotNull final File subImage, @NotNull final File screenshot) throws IOException;
 }
