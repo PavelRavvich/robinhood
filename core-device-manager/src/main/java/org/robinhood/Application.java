@@ -10,11 +10,11 @@ import java.io.IOException;
 
 /**
  * Author : Pavel Ravvich.
- * Created : 13/11/2017.
+ * Created : 17/11/2017.
  * <p>
- * App
+ * Application
  */
-public class App {
+public class Application {
     public static void main(String[] args) throws AWTException, IOException {
         final ImagesHandler imagesHandler = new ImagesHandlerImpl("", 3);
         final File src = new File("/Users/pavel/Desktop/img_comparing/src.png");

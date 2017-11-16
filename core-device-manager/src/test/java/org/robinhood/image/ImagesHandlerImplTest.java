@@ -8,6 +8,7 @@ import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.util.Arrays;
 
 import static com.sun.deploy.util.SystemUtils.deleteRecursive;
 import static org.hamcrest.core.Is.is;
@@ -55,8 +56,8 @@ public class ImagesHandlerImplTest {
     public void whenDoScreenThenFilenameIncrement() throws IOException, AWTException {
         imagesHandler.doScreen();
         imagesHandler.doScreen();
-        final String name = dir.listFiles()[1].getName();
-        assertThat("SCREEN_1", is(name));
+        final String result = Arrays.stream(dir.list()).filter(item -> item.equals("SCREEN_1")).findFirst().get();
+        assertThat("SCREEN_1", is(result));
     }
 
     @Test
