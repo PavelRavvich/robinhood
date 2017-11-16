@@ -28,12 +28,12 @@ public class ImagesHandlerImpl implements ImagesHandler {
     /**
      * Path to target dir.
      */
-    @Value("max.img.storage.path")
+    @Value("${max.img.storage.path}")
     private String baseDir;
     /**
      * Maximum files for save in base dir.
      */
-    @Value("max.tmp.img.storage")
+    @Value("${max.tmp.img.storage}")
     private int maxAmountFiles;
 
     private final Robot robot;
