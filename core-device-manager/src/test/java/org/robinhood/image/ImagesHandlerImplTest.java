@@ -8,6 +8,7 @@ import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.util.Arrays;
 
 import static com.sun.deploy.util.SystemUtils.deleteRecursive;
 import static org.hamcrest.core.Is.is;
@@ -24,7 +25,7 @@ public class ImagesHandlerImplTest {
     }
 
     @BeforeClass
-    public static void beforeClass() throws IOException {
+    public static void beforeClass() throws IOException, NoSuchFieldException, IllegalAccessException {
         dir = Files.createTempDirectory(null).toFile();
     }
 
@@ -40,23 +41,24 @@ public class ImagesHandlerImplTest {
     @Test
     public void whenDoScreenThenCreatePrintScreen() throws IOException, AWTException {
         imagesHandler.doScreen();
-        final boolean result = dir.listFiles()[0].exists();
-        assertTrue(result);
+        assertTrue(dir.listFiles()[0].exists());
     }
 
     @Test
     public void whenDoScreenThenFilenameLikeTemplate() throws IOException, AWTException {
         imagesHandler.doScreen();
-        final String name = dir.listFiles()[0].getName();
-        assertThat("SCREEN_0", is(name));
+        assertThat("SCREEN_0", is(dir.listFiles()[0].getName()));
     }
 
     @Test
     public void whenDoScreenThenFilenameIncrement() throws IOException, AWTException {
         imagesHandler.doScreen();
         imagesHandler.doScreen();
-        final String name = dir.listFiles()[1].getName();
-        assertThat("SCREEN_1", is(name));
+        assertThat("SCREEN_0", is(Arrays.asList(dir.listFiles()).stream().filter(item ->
+                item.getName().equals("SCREEN_0")).findFirst().get().getName()));
+
+        assertThat("SCREEN_1", is(Arrays.asList(dir.listFiles()).stream().filter(item ->
+                item.getName().equals("SCREEN_1")).findFirst().get().getName()));
     }
 
     @Test
@@ -64,9 +66,7 @@ public class ImagesHandlerImplTest {
         for (int i = 0; i < 4; i++) {
             imagesHandler.doScreen();
         }
-
-        int amountOfFiles = dir.listFiles().length;
-        assertThat(1, is(amountOfFiles));
+        assertThat(1, is(dir.listFiles().length));
     }
 
     /**

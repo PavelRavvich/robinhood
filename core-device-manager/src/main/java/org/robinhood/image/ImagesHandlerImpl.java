@@ -1,7 +1,7 @@
 package org.robinhood.image;
 
 import com.sun.istack.internal.NotNull;
-import lombok.Data;
+import org.robinhood.util.PropertiesLoader;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -14,7 +14,6 @@ import java.util.stream.Stream;
 /**
  * ImagesHandlerImpl handle img tasks.
  */
-@Data
 public class ImagesHandlerImpl implements ImagesHandler {
     /**
      * Template of filename.
@@ -27,18 +26,26 @@ public class ImagesHandlerImpl implements ImagesHandler {
     /**
      * Path to target dir.
      */
-    private String baseDir;
+    private String baseDir = PropertiesLoader.getPropStr("screenshot-storage-dir");
     /**
      * Maximum files for save in base dir.
      */
-    private int maxAmountFiles;
+    private int maxAmountFiles = PropertiesLoader.getPropInt("amount-screenshot");;
 
-    private final Robot robot;
+    private Robot robot;
 
     public ImagesHandlerImpl(@NotNull final String baseDir, @NotNull final int maxAmountFiles) throws AWTException {
         this.maxAmountFiles = maxAmountFiles;
         this.baseDir = baseDir;
         this.robot = new Robot();
+    }
+
+    public ImagesHandlerImpl() {
+        try {
+            this.robot = new Robot();
+        } catch (AWTException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -89,21 +96,21 @@ public class ImagesHandlerImpl implements ImagesHandler {
      * @return center of target img.
      */
     public Point findSubImg(@NotNull final File subImage, @NotNull final File screenshot) throws IOException {
-        final BufferedImage src = ImageIO.read(screenshot);
-        final BufferedImage dst = ImageIO.read(subImage);
+        final BufferedImage source = ImageIO.read(screenshot);
+        final BufferedImage search = ImageIO.read(subImage);
 
-        for (int i = 0; i <= src.getWidth() - dst.getWidth(); i++) {
-            check_subimage:
-            for (int j = 0; j <= src.getHeight() - dst.getHeight(); j++) {
-                for (int ii = 0; ii < dst.getWidth(); ii++) {
-                    for (int jj = 0; jj < dst.getHeight(); jj++) {
-                        if (dst.getRGB(ii, jj) != src.getRGB(i + ii, j + jj)) {
-                            continue check_subimage;
+        for (int i = 0; i <= source.getWidth() - search.getWidth(); i++) {
+            checkSubImage:
+            for (int j = 0; j <= source.getHeight() - search.getHeight(); j++) {
+                for (int ii = 0; ii < search.getWidth(); ii++) {
+                    for (int jj = 0; jj < search.getHeight(); jj++) {
+                        if (search.getRGB(ii, jj) != source.getRGB(i + ii, j + jj)) {
+                            continue checkSubImage;
                         }
                     }
                 }
                 //If all pixels matched return center of sub image.
-                return new Point(i + dst.getWidth() / 2, j + dst.getHeight() / 2);
+                return new Point(i + search.getWidth() / 2, j + search.getHeight() / 2);
             }
         }
         return new Point();
