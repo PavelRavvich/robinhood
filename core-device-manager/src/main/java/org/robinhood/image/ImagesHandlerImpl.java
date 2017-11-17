@@ -8,6 +8,7 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
@@ -76,9 +77,7 @@ public class ImagesHandlerImpl implements ImagesHandler {
         if (!baseDirectory.isDirectory() || garbageImg == null || garbageImg.length == 0) {
             throw new IllegalStateException("Illegal directory!");
         }
-        for (File file : garbageImg) {
-            file.delete();
-        }
+        Arrays.stream(garbageImg).forEach(File::delete);
         fileNumber = 0;
     }
 
