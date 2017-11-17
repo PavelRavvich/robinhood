@@ -36,12 +36,24 @@ public class ImagesHandlerImpl implements ImagesHandler {
     @Value("${max.tmp.img.storage}")
     private int maxAmountFiles;
 
-    private final Robot robot;
+    private Robot robot;
 
-    public ImagesHandlerImpl(@NotNull final String baseDir, @NotNull final int maxAmountFiles) throws AWTException {
+    public ImagesHandlerImpl(@NotNull final String baseDir, @NotNull final int maxAmountFiles) {
         this.maxAmountFiles = maxAmountFiles;
         this.baseDir = baseDir;
-        this.robot = new Robot();
+        try {
+            this.robot = new Robot();
+        } catch (AWTException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public ImagesHandlerImpl() {
+        try {
+            this.robot = new Robot();
+        } catch (AWTException e) {
+            e.printStackTrace();
+        }
     }
 
     /**

@@ -17,7 +17,7 @@ import static org.junit.Assert.assertTrue;
 
 public class ImagesHandlerImplTest {
 
-    private final ImagesHandler imagesHandler = new ImagesHandlerImpl(dir.getAbsolutePath(), 3);
+    private final ImagesHandler imagesHandler = new ImagesHandlerImpl();
 
     private static File dir;
 
