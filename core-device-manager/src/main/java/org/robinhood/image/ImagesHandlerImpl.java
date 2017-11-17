@@ -34,12 +34,18 @@ public class ImagesHandlerImpl implements ImagesHandler {
 
     private Robot robot;
 
+    /**
+     * Constructor for test.
+     */
     public ImagesHandlerImpl(@NotNull final String baseDir, @NotNull final int maxAmountFiles) throws AWTException {
         this.maxAmountFiles = maxAmountFiles;
         this.baseDir = baseDir;
         this.robot = new Robot();
     }
 
+    /**
+     * Production constructor.
+     */
     public ImagesHandlerImpl() {
         try {
             this.robot = new Robot();
