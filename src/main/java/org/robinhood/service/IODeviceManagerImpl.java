@@ -1,17 +1,14 @@
 package org.robinhood.service;
 
-import org.jetbrains.annotations.NotNull;
 import org.robinhood.image.ImagesHandler;
 import org.robinhood.site.Action;
-import org.robinhood.site.vktargent.Service.ResetTaskList;
+import org.robinhood.site.vktarget.Service.ResetTaskList;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
-import static org.robinhood.service.IODeviceManager.Command.UPDATE_TASK_LIST;
 
 
 /**
@@ -28,8 +25,12 @@ public class IODeviceManagerImpl implements IODeviceManager {
     private List<Action> actions = new ArrayList<>();
 
     private void initActions() {
-        actions.add(new ResetTaskList());
-        // TODO: 30/11/2017 add actions .
+        try {
+            actions.add(new ResetTaskList());
+            // TODO: 30/11/2017 add actions .
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
