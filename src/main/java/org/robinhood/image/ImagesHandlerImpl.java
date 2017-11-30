@@ -27,11 +27,11 @@ public class ImagesHandlerImpl implements ImagesHandler {
     /**
      * Path to target dir.
      */
-    private String baseDir = PropertiesLoader.getPropStr("screenshot-storage-dir");
+    private String baseDir = PropertiesLoader.getPropStr("screenshot.storage.dir");
     /**
      * Maximum files for save in base dir.
      */
-    private int maxAmountFiles = PropertiesLoader.getPropInt("amount-screenshot");;
+    private int maxAmountFiles = PropertiesLoader.getPropInt("amount.screenshot");;
 
     private Robot robot;
 

@@ -5,7 +5,7 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 public interface IODeviceManager {
-    BufferedImage process() throws IOException, AWTException;
+    boolean process() throws IOException, AWTException;
 
     public enum Command {
         UPDATE_TASK_LIST

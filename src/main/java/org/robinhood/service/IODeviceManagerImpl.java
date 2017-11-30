@@ -2,6 +2,8 @@ package org.robinhood.service;
 
 import org.robinhood.image.ImagesHandler;
 import org.robinhood.site.Action;
+import org.robinhood.site.vktarget.Service.Available;
+import org.robinhood.site.vktarget.Service.CurrentTabCloser;
 import org.robinhood.site.vktarget.Service.ResetTaskList;
 
 import java.awt.*;
@@ -16,16 +18,30 @@ import java.util.List;
  * Created : 30/11/2017.
  */
 public class IODeviceManagerImpl implements IODeviceManager {
-
+    /**
+     * Handler of image.
+     */
     private ImagesHandler imagesHandler;
-
+    /**
+     * Input control.
+     */
     private RobotWrapper robot;
+    /**
+     * Actions list contain all system actions.
+     */
+    private List<Action> actions;
 
-    //list action
-    private List<Action> actions = new ArrayList<>();
+    public IODeviceManagerImpl(ImagesHandler imagesHandler, RobotWrapper robot) {
+        this.imagesHandler = imagesHandler;
+        this.robot = robot;
+        actions = new ArrayList<>();
+        initActions();
+    }
 
     private void initActions() {
         try {
+            actions.add(new Available());
+            actions.add(new CurrentTabCloser());
             actions.add(new ResetTaskList());
             // TODO: 30/11/2017 add actions .
         } catch (IOException e) {
@@ -34,17 +50,17 @@ public class IODeviceManagerImpl implements IODeviceManager {
     }
 
     @Override
-    public BufferedImage process() throws IOException, AWTException {
+    public boolean process() throws IOException, AWTException {
         final BufferedImage screenshot = imagesHandler.doScreen();
         for (Action action : actions) {
             final BufferedImage subImage = action.getFragment();
             final Point target = imagesHandler.findSubImg(subImage, screenshot);
             if (target.x != 0 && target.y != 0) {
-                robot.fire(target);
-                break;
+                robot.go(target);
+                return true;
             }
         }
-        return imagesHandler.doScreen();
+        return false;
     }
 
     public boolean processParallel() throws IOException, AWTException {
