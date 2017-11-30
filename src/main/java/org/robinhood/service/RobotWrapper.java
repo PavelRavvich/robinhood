@@ -42,7 +42,6 @@ public class RobotWrapper {
         }
 
         robot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
-        robot.delay(generator.nextInt(3, 11));
         robot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
         robot.delay(generator.nextInt(7_777, 11_111));
     }

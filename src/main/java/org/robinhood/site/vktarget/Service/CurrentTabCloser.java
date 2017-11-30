@@ -4,6 +4,7 @@ import org.robinhood.site.Action;
 
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.net.URISyntaxException;
 
 /**
  * Author : Pavel Ravvich.
@@ -13,7 +14,7 @@ public class CurrentTabCloser implements Action {
 
     private BufferedImage fragment;
 
-    public CurrentTabCloser() throws IOException {
+    public CurrentTabCloser() throws IOException, URISyntaxException {
         fragment = init("CurrentTabCloser");
     }
 

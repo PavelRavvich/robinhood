@@ -7,6 +7,7 @@ com
 */target
 */*/target
 target
+src/main/resources/img
 
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/

@@ -7,6 +7,7 @@ import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.net.URISyntaxException;
 
 /**
  * Author : Pavel Ravvich.
@@ -16,7 +17,7 @@ public class ResetTaskList implements Action {
 
     private BufferedImage fragment;
 
-    public ResetTaskList() throws IOException {
+    public ResetTaskList() throws IOException, URISyntaxException {
         fragment = init("ResetTaskList");
     }
 

@@ -16,33 +16,8 @@ import java.util.stream.Stream;
  * ImagesHandlerImpl handle img tasks.
  */
 public class ImagesHandlerImpl implements ImagesHandler {
-    /**
-     * Template of filename.
-     */
-    private final String NAME_TEMPLATE = "SCREEN_#";
-    /**
-     * Current amount of screens in target dir.
-     */
-    private int fileNumber = 0;
-    /**
-     * Path to target dir.
-     */
-    private String baseDir = PropertiesLoader.getPropStr("screenshot.storage.dir");
-    /**
-     * Maximum files for save in base dir.
-     */
-    private int maxAmountFiles = PropertiesLoader.getPropInt("amount.screenshot");;
 
     private Robot robot;
-
-    /**
-     * Constructor for test.
-     */
-    public ImagesHandlerImpl(@NotNull final String baseDir, final int maxAmountFiles) throws AWTException {
-        this.maxAmountFiles = maxAmountFiles;
-        this.baseDir = baseDir;
-        this.robot = new Robot();
-    }
 
     /**
      * Production constructor.
@@ -54,50 +29,18 @@ public class ImagesHandlerImpl implements ImagesHandler {
     /**
      * Do print screen.
      */
-    public BufferedImage doScreen() throws IOException, AWTException {
-        final Rectangle rectangle = new Rectangle(Toolkit.getDefaultToolkit().getScreenSize());
-        final BufferedImage buffImage = robot.createScreenCapture(rectangle);
-        if (fileNumber >= maxAmountFiles) {
-            deleteOldScreens();
-        }
-        final File file = new File(baseDir, NAME_TEMPLATE.replace("#", Integer.toString(fileNumber++)));
-        ImageIO.write(buffImage, "png", file);
-        return buffImage;
-    }
-
-    /**
-     * Delete all old screens files.
-     */
-    private void deleteOldScreens() {
-        final File baseDirectory = new File(baseDir);
-        final File[] garbageImg = baseDirectory.listFiles();
-        if (!baseDirectory.isDirectory() || garbageImg == null || garbageImg.length == 0) {
-            throw new IllegalStateException("Illegal directory!");
-        }
-        Arrays.stream(garbageImg).forEach(File::delete);
-        fileNumber = 0;
-    }
-
-    /**
-     * Print ImagesHandler.
-     *
-     * @return byte representation of screen image.
-     */
-    public BufferedImage grabScreen() throws AWTException {
-        final Robot robot = new Robot();
-        final Dimension screenSze = Toolkit.getDefaultToolkit().getScreenSize();
-        final Rectangle rectangle = new Rectangle(screenSze);
-        return robot.createScreenCapture(rectangle);
+    public BufferedImage getScreen() {
+        return robot.createScreenCapture(new Rectangle(Toolkit.getDefaultToolkit().getScreenSize()));
     }
 
     /**
      * Find center sub image in large image.
      *
      * @param subImage   must have maximum little size.
-     * @param screenshot of screen.
      * @return center of target img.
      */
-    public Point findSubImg(@NotNull final BufferedImage subImage, @NotNull BufferedImage screenshot) {
+    public Point findSubImg(@NotNull final BufferedImage subImage) {
+        final BufferedImage screenshot = getScreen();
         for (int i = 0; i <= screenshot.getWidth() - subImage.getWidth(); i++) {
             checkSubImage:
             for (int j = 0; j <= screenshot.getHeight() - subImage.getHeight(); j++) {
