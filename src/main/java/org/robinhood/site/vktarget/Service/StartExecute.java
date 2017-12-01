@@ -8,19 +8,18 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 
 /**
- * Проверить доступные задания.
+ * Начать выполнение задания
  */
-public class Available implements OperationSimple {
-
+public class StartExecute implements OperationSimple {
     @Override
     public String key() {
-        return "Available";
+        return "StartExecute";
     }
 
     @Override
     public Point getTargetPoint(@NotNull BufferedImage... screenshot) {
-        final int x = PropUtil.getPropInt("available.x");
-        final int y = PropUtil.getPropInt("available.y");
+        final int x = PropUtil.getPropInt("start.execute.x");
+        final int y = PropUtil.getPropInt("start.execute.y");
         return new Point(x, y);
     }
 }

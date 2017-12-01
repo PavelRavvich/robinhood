@@ -3,9 +3,9 @@ package org.robinhood.site.vktarget.Service;
 import org.robinhood.site.OperationImage;
 
 /**
- * Закрыть текущую вкладку браузера.
+ * Проверить выполненно ли задание.
  */
-public class CurrentTabCloser extends OperationImage {
+public class CheckExecutable extends OperationImage {
     @Override
     public String key() {
         return "CurrentTabCloser";
