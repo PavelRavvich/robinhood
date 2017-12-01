@@ -15,6 +15,7 @@ import java.awt.*;
 import java.awt.event.InputEvent;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.stream.IntStream;
 
 /**
  * Author : Pavel Ravvich.
@@ -36,9 +37,9 @@ public class OperationManagerImpl implements OperationManager {
 
     private void initActions() {
         actions.put("Available" ,new Available());
-        actions.put("CheckExecutable" ,new CheckExecutable());
-        actions.put("CurrentTabCloser" ,new CurrentTabCloser());
-        actions.put("StartExecute" ,new StartExecute());
+        //actions.put("CheckExecutable" ,new CheckExecutable());
+        //actions.put("CurrentTabCloser" ,new CurrentTabCloser());
+        //actions.put("StartExecute" ,new StartExecute());
         actions.put("YouTubeLogo" ,new YouTubeLogo());
     }
 
@@ -71,20 +72,31 @@ public class OperationManagerImpl implements OperationManager {
         }
 
         public void go(@NotNull final Point point) {
-
             robot.delay(generator.nextInt(1_111, 7_777));
+            randomWalk();
+            smoothTransition(point.x, point.y);
+            robot.delay(generator.nextInt(5, 10));
+            robot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
+            robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
+            robot.delay(generator.nextInt(5, 10));
+            robot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
+            robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
+            robot.delay(generator.nextInt(0, 3_000));
+        }
 
+        private void randomWalk() {
+            IntStream.range(0, generator.nextInt(0, 4)).forEach(i ->
+                    smoothTransition(generator.nextInt(200, 600), generator.nextInt(200, 600)));
+        }
+
+        private void smoothTransition(final int targetX, final int targetY) {
             final Point currentPos = MouseInfo.getPointerInfo().getLocation();
-            for (int i = 0; i < 100; i++) {
-                int x = ((point.x * i) / 100) + (currentPos.x * (100 - i) / 100);
-                int y = ((point.y * i) / 100) + (currentPos.y * (100 - i) / 100);
+            IntStream.range(0, 100).forEach(i -> {
+                int x = ((targetX * i) / 100) + (currentPos.x * (100 - i) / 100);
+                int y = ((targetY * i) / 100) + (currentPos.y * (100 - i) / 100);
                 robot.mouseMove(x, y);
                 robot.delay(generator.nextInt(2, 20));
-            }
-
-            robot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
-            robot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
-            robot.delay(generator.nextInt(7_777, 11_111));
+            });
         }
     }
 }
