@@ -5,10 +5,9 @@ import org.jetbrains.annotations.NotNull;
 import org.robinhood.site.OperationImage;
 import org.robinhood.site.OperationSimple;
 import org.robinhood.site.vktarget.Service.Available;
-import org.robinhood.site.vktarget.Service.CheckExecutable;
-import org.robinhood.site.vktarget.Service.CurrentTabCloser;
-import org.robinhood.site.vktarget.Service.StartExecute;
-import org.robinhood.site.vktarget.YouTube.YouTubeLogo;
+import org.robinhood.site.vktarget.Service.OKLogo;
+import org.robinhood.site.vktarget.Service.VKLogo;
+import org.robinhood.site.vktarget.Service.YouTubeLogo;
 import org.robinhood.util.ImgUtil;
 
 import java.awt.*;
@@ -23,30 +22,34 @@ import java.util.stream.IntStream;
  */
 public class OperationManagerImpl implements OperationManager {
     /**
-     * Actions list contain all system actions.
+     * Actions list contain all system operations.
      */
-    private Map<String, OperationSimple> actions;
+    private Map<String, OperationSimple> operations;
 
     private RobotWrapper robot;
 
     public OperationManagerImpl() {
-        actions = new HashMap<>();
+        operations = new HashMap<>();
         robot = new RobotWrapper();
-        initActions();
+        initOperations();
     }
 
-    private void initActions() {
-        actions.put("Available" ,new Available());
-        //actions.put("CheckExecutable" ,new CheckExecutable());
-        //actions.put("CurrentTabCloser" ,new CurrentTabCloser());
-        //actions.put("StartExecute" ,new StartExecute());
-        actions.put("YouTubeLogo" ,new YouTubeLogo());
+    private void initOperations() {
+        final Available available = new Available();
+        final YouTubeLogo youTubeLogo = new YouTubeLogo();
+        final OKLogo okLogo = new OKLogo();
+        final VKLogo vkLogo = new VKLogo();
+
+        operations.put(available.key(), available);
+        operations.put(youTubeLogo.key(), youTubeLogo);
+        operations.put(okLogo.key(), okLogo);
+        operations.put(vkLogo.key(), vkLogo);
     }
 
     @Override
     public void execute(@NotNull final String key) throws AWTException {
         Point target;
-        final OperationSimple operationSimple = actions.get(key);
+        final OperationSimple operationSimple = operations.get(key);
         if (operationSimple instanceof OperationImage) {
             target = operationSimple.getTargetPoint(ImgUtil.printScreen());
         } else {

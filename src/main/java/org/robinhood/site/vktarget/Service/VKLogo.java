@@ -1,4 +1,4 @@
-package org.robinhood.site.vktarget.OK;
+package org.robinhood.site.vktarget.Service;
 
 import org.robinhood.site.OperationImage;
 
@@ -6,11 +6,12 @@ import org.robinhood.site.OperationImage;
  * Author : Pavel Ravvich.
  * Created : 01/12/2017.
  * <p>
- * OKLogo
+ * VKLogo
  */
-public class OKLogo  extends OperationImage {
+public class VKLogo extends OperationImage {
     @Override
     public String key() {
-        return "OKLogo";
+        return "VKLogo";
     }
+
 }
